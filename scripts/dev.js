@@ -1,4 +1,5 @@
 const esbuild = require('esbuild');
+const servor = require('servor');
 
 const { removeBuild, generateHTML } = require('./utils');
 
@@ -10,9 +11,13 @@ esbuild
       bundle: 'src/app.jsx',
     },
     bundle: true,
-    logLevel: 'info',
-    minify: true,
     outdir: 'dist',
-    sourcemap: true,
+    watch: true,
   })
-  .then(() => generateHTML());
+  .then(() => {
+    generateHTML();
+    servor({
+      root: 'dist',
+      port: 3000,
+    }).then(({ url }) => console.log(`Server is running at ${url}`));
+  });

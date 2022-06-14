@@ -1,9 +1,9 @@
 {
-  "name": "only-css",
+  "name": "no-js",
   "version": "1.0.0",
   "scripts": {
-    "build": "node scripts/build.js --build",
-    "start": "node scripts/build.js --watch"
+    "build": "node scripts/build.js",
+    "start": "node scripts/dev.js"
   },
   "dependencies": {
     "react": "^18.1.0",
@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "esbuild": "^0.14.43",
-    "servor": "^4.0.2",
-    "yargs-parser": "^21.0.1"
+    "servor": "^4.0.2"
   }
 }
