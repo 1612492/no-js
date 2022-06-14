@@ -1,18 +1,16 @@
-const esbuild = require('esbuild');
+const Webpack = require('webpack');
 
-const { removeBuild, generateHTML } = require('./utils');
+const genConfig = require('./gen-config');
 
-removeBuild();
+const compiler = Webpack(genConfig(true));
 
-esbuild
-  .build({
-    entryPoints: {
-      bundle: 'src/app.jsx',
-    },
-    bundle: true,
-    logLevel: 'info',
-    minify: true,
-    outdir: 'dist',
-    sourcemap: true,
-  })
-  .then(() => generateHTML());
+compiler.run((error, stats) => {
+  if (error) throw error;
+
+  console.log(
+    stats.toString({
+      chunks: false,
+      colors: true,
+    })
+  );
+});
