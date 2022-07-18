@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const srcPath = `${process.cwd()}/src`;
 const buildPath = `${process.cwd()}/dist`;
 
-module.exports = function (isProd) {
+module.exports = function (isProd = false) {
   return {
     mode: isProd ? 'production' : 'development',
     entry: {
@@ -19,11 +19,17 @@ module.exports = function (isProd) {
         {
           test: /\.js?x$/,
           exclude: /node_modules/,
+          resourceQuery: { not: [/raw/] },
           use: ['babel-loader'],
         },
         {
           test: /\.css$/,
+          resourceQuery: { not: [/raw/] },
           use: [isProd ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
+        },
+        {
+          resourceQuery: /raw/,
+          type: 'asset/source',
         },
       ],
     },
@@ -46,8 +52,13 @@ module.exports = function (isProd) {
         }
       : {}),
     stats: 'minimal',
+    devtool: 'source-map',
     plugins: [
-      new HtmlWebpackPlugin({ template: `${srcPath}/index.html`, minify: true }),
+      new HtmlWebpackPlugin({
+        template: `${srcPath}/index.html`,
+        inject: false,
+        ...(isProd ? { minify: true } : {}),
+      }),
       ...(isProd ? [new MiniCssExtractPlugin()] : []),
     ],
   };

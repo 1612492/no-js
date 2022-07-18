@@ -1,5 +1,5 @@
 {
-  "name": "no-js",
+  "name": "only-css",
   "version": "1.0.0",
   "scripts": {
     "build": "node scripts/build.js",

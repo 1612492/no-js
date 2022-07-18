@@ -2,7 +2,7 @@ const Webpack = require('webpack');
 
 const genConfig = require('./gen-config');
 
-const compiler = Webpack(genConfig(true));
+const compiler = Webpack(genConfig());
 
 compiler.run((error, stats) => {
   if (error) throw error;

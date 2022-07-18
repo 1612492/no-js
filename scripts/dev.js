@@ -3,7 +3,7 @@ const WebpackDevServer = require('webpack-dev-server');
 
 const genConfig = require('./gen-config');
 
-const compiler = Webpack(genConfig(false));
+const compiler = Webpack(genConfig());
 
 const server = new WebpackDevServer(
   {
